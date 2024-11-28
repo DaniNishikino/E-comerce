@@ -1,13 +1,13 @@
 package com.danilel.ecomerce.service;
 
-import com.danilel.ecomerce.entity.User;
+import com.danilel.ecomerce.DTOs.UserDTO;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    User save(User user);
-    User deleteById(Long id);
-    List<User>getUsers();
-    Optional<User> getById(Long id);
+    UserDTO save(UserDTO user);
+    void deleteById(Long id);
+    List<UserDTO>getUsers();
+    Optional<UserDTO> getById(Long id);
 }

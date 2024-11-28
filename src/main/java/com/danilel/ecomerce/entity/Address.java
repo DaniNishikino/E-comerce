@@ -14,12 +14,19 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(nullable = false)
     private String cep;
+    @Column(nullable = false)
     private String country;
+    @Column(nullable = false)
     private String state;
+    @Column(nullable = false)
     private String city;
+    @Column(nullable = false)
     private String district;
+    @Column(nullable = false)
     private String street;
+    @Column(nullable = false)
     private Integer number;
 
     public Address(String cep, String country, String state, String city, String district, String street, Integer number) {

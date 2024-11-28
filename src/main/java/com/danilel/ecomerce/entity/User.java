@@ -1,5 +1,6 @@
 package com.danilel.ecomerce.entity;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,11 +18,16 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(nullable = false)
     private String login;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String cpf;
     @OneToMany
+    @Column(nullable = false)
     private List<Address> addresses;
     @OneToOne
     private Cart cart;
