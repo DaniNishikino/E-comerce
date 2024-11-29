@@ -8,6 +8,8 @@ import com.danilel.ecomerce.entity.Address;
 import com.danilel.ecomerce.entity.Cart;
 import com.danilel.ecomerce.entity.Product;
 import com.danilel.ecomerce.entity.User;
+import com.danilel.ecomerce.repository.AddressRepository;
+import com.danilel.ecomerce.repository.CartRepository;
 import com.danilel.ecomerce.repository.UserRepository;
 import com.danilel.ecomerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,18 +24,39 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    AddressRepository addressRepository;
+    @Autowired
+    CartRepository cartRepository;
 
     @Override
     public UserDTO save(UserDTO user) {
         User userToSave = userToEntity(user);
-        User savedUser = userRepository.save(userToSave);
-        return userToDTO(savedUser);
+
+        // Save addresses first
+        List<Address> savedAddresses = userToSave.getAddresses().stream()
+                .map(addressRepository::save)
+                .collect(Collectors.toList());
+        userToSave.setAddresses(savedAddresses);
+
+        // Save cart if it exists
+        if (userToSave.getCart() != null) {
+            Cart savedCart = cartRepository.save(userToSave.getCart());
+            userToSave.setCart(savedCart);
+        }
+
+        if (userRepository.findByLogin(user.login()).isEmpty()) {
+            User savedUser = userRepository.save(userToSave);
+            return userToDTO(savedUser);
+        } else {
+            throw new RuntimeException("User already exists");
+        }
     }
 
     @Override
-    public void deleteById(Long id) {
-        if (userRepository.findById(id).isPresent()){
-            userRepository.deleteById(id);
+    public void deleteByLogin(String login) {
+        if (userRepository.findByLogin(login).isPresent()){
+            userRepository.deleteByLogin(login);
         }else {
             throw new RuntimeException("User not found");
         }
@@ -46,8 +69,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserDTO> getById(Long id) {
-        return userRepository.findById(id).map(this::userToDTO);
+    public Optional<UserDTO> getByLogin(String login) {
+        return userRepository.findByLogin(login).map(this::userToDTO);
     }
 
     private User userToEntity(UserDTO userDTO) {
@@ -57,7 +80,7 @@ public class UserServiceImpl implements UserService {
                 userDTO.name(),
                 userDTO.cpf(),
                 userDTO.addresses().stream().map(this::addressToEntity).collect(Collectors.toList()),
-                cartToEntity(userDTO.cart())
+                userDTO.cart() != null ? cartToEntity(userDTO.cart()) : null
         );
     }
 
@@ -68,7 +91,7 @@ public class UserServiceImpl implements UserService {
                 user.getName(),
                 user.getCpf(),
                 user.getAddresses().stream().map(this::addressToDTO).collect(Collectors.toList()),
-                cartToDTO(user.getCart())
+                user.getCart() != null ? cartToDTO(user.getCart()) : null
         );
     }
 

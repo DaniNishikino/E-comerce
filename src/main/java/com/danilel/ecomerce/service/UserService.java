@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface UserService {
     UserDTO save(UserDTO user);
-    void deleteById(Long id);
+    void deleteByLogin(String login);
     List<UserDTO>getUsers();
-    Optional<UserDTO> getById(Long id);
+    Optional<UserDTO> getByLogin(String login);
 }

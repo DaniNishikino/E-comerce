@@ -1,6 +1,6 @@
 package com.danilel.ecomerce.service.impl;
 
-import com.danilel.ecomerce.entity.Product;
+import com.danilel.ecomerce.DTOs.ProductDTO;
 import com.danilel.ecomerce.service.ProductService;
 import org.springframework.stereotype.Service;
 
@@ -9,22 +9,22 @@ import java.util.Optional;
 @Service
 public class ProductServiceImpl implements ProductService {
     @Override
-    public Product save(Product user) {
+    public ProductDTO createProduct(ProductDTO productDTO) {
         return null;
     }
 
     @Override
-    public Product deleteById(Long id) {
+    public ProductDTO deleteById(Long id) {
         return null;
     }
 
     @Override
-    public List<Product> getUsers() {
+    public List<ProductDTO> getProducts() {
         return List.of();
     }
 
     @Override
-    public Optional<Product> getById(Long id) {
+    public Optional<ProductDTO> getById(Long id) {
         return Optional.empty();
     }
 }

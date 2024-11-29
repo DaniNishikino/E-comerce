@@ -15,12 +15,13 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Cart deleteById(Long id) {
+    public Cart clearCartById(Long id) {
         return null;
     }
 
+
     @Override
-    public List<Cart> getUsers() {
+    public List<Cart> getCarts() {
         return List.of();
     }
 
