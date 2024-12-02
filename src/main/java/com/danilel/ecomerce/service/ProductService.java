@@ -7,8 +7,10 @@ import java.util.Optional;
 
 public interface ProductService {
     ProductDTO createProduct(ProductDTO productDTO);
-    ProductDTO deleteById(Long id);
+    Void deleteById(Long id);
     List<ProductDTO> getProducts();
     Optional<ProductDTO> getById(Long id);
-
+    ProductDTO changePrice(Long id, Double newPrice);
+    ProductDTO updateQuantity(Long id, Integer quantity);
+    Double totalValueInStock(Long id);
 }

@@ -22,15 +22,11 @@ public class Product {
     private Double price;
     @Column(nullable = false)
     private Integer quantity;
-    @ManyToOne
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
 
-    public Product(String name, String description, Double price, Integer quantity, Cart cart) {
+    public Product(String name, String description, Double price, Integer quantity) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.quantity = quantity;
-        this.cart = cart;
     }
 }

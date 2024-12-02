@@ -16,7 +16,7 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToMany(mappedBy = "cart")
+    @OneToMany
     List<Product> products;
     private Double totalPrice;
 
